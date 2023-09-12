@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { read } from './reading_XLSX';
+import { read } from '../reading_XLSX';
 import Timeline, { CustomMarker, TimelineMarkers, TodayMarker } from 'react-calendar-timeline'
 import moment from 'moment'
 import 'moment/locale/ja';
