@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.css" integrity="sha512-p9O6I9Hcnl0G3J3b3RE/YLPjIq1LTFRDnGtgqTzgrgYm0iHckSxKk3YssXjGoA7K2RpELs0cvAmWdGJwPca7UOg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div id="timeline"></div>
+
+    <!-- Add vis-timeline dependency -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.js" integrity="sha512-Tb8yOjdPzdRbPDTwGTl2/Kf5zrP5wl9I6Zmcx3ZsvSbwDVqYKerCSifO9PGJZFm7krvJ6aZnR0aDlMVo91v4cQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Your JavaScript code to create the timeline -->
+    <script>
+        var container = document.getElementById('timeline');
+        var items = new vis.DataSet([
+            { group: 'os', content: 'Windows 7', start: '2009-10-22', end: '2020-01-14' },
+            { group: 'os', content: 'Windows 8', start: '2012-10-26', end: '2016-01-12' },
+            // Add more items as needed
+        ]);
+        var groups = new vis.DataSet([
+            { id: 'os', content: 'OS' },
+            { id: 'ie', content: 'IE' },
+            { id: 'firefox', content: 'Firefox' },
+            { id: 'chrome', content: 'Chrome' },
+            { id: 'opera', content: 'Opera' },
+            { id: 'safari', content: 'Safari' }
+        ]);
+
+        var options = {
+            start: '2009-01-01',
+            end: '2016-12-31',
+            zoomable: false,
+            orientation: 'top',
+            tooltip: {
+                delay: 50
+            }
+        };
+
+        var timeline = new vis.Timeline(container);
+        timeline.setOptions(options);
+        timeline.setGroups(groups);
+        timeline.setItems(items);
+    </script>
+</body>
+</html>
