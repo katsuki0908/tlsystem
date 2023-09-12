@@ -164,8 +164,6 @@ function reading_data(row, col, Sheet1) {
   return Sheet1[`${indexToColumn(col)}${row}`].v;
 }
 
-
-
 //データの判定
 function judge_data(row, col, Sheet1) {
   if (Sheet1[`${indexToColumn(col)}${row}`] === undefined) {
@@ -206,4 +204,6 @@ function reading_time(row, col, Sheet1) {
   return { start_time, end_time, working_time };
 
 }
+
+export default read;
 
