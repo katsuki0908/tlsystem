@@ -1,4 +1,3 @@
-import { PrismaClient } from '@prisma/client'
 
 export function read(workbook, momentday) {
 
