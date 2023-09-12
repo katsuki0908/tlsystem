@@ -204,5 +204,5 @@ function reading_time(row, col, Sheet1) {
 
 }
 
-export default read;
+export default reading_XLSX;
 
