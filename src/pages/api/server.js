@@ -4,7 +4,6 @@ export default async function handler(req, res) {
     const prisma = new PrismaClient();
 
     if (req.method === "POST") {
-        // データベースにデータを追加するロジック
         try {
             let newItem;
             for (const item of req.body) {
@@ -26,12 +25,10 @@ export default async function handler(req, res) {
         }
     } else if (req.method === "GET") {
         const { momentday } = req.query;
-        // データベースからデータを取得する
         try {
             let database;
 
             if (momentday) {
-                //日付での検索
                 database = await prisma.shift_system.findMany({
                     where: {
                         DAY_Monday: new Date(momentday)
@@ -39,8 +36,23 @@ export default async function handler(req, res) {
                 });
             }
             else {
-                //全データの取得
-                database = await prisma.shift_system.findMany();
+                database = await prisma.shift_system.findMany({
+                    where: {
+                        DAY_Monday: {
+                          in: await prisma.shift_system.findMany({
+                            select: {
+                              DAY_Monday: true,
+                            },
+                            distinct: ['DAY_Monday'],
+                            orderBy: {
+                              DAY_Monday: 'desc',
+                            },
+                            take: 3,
+                          }).then((data) => data.map((item) => item.DAY_Monday)),
+                        },
+                      },
+                });
+
             }
 
             console.log('取得に成功しました');
@@ -49,7 +61,6 @@ export default async function handler(req, res) {
             res.status(500).json({ error: "データの取得に失敗しました。" });
         }
     } else if (req.method === "DELETE") {
-        // データベースからデータを削除するロジック
         const { id } = req.body;
         try {
             await prisma.shift_system.delete({

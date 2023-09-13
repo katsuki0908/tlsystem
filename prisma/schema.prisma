@@ -20,4 +20,10 @@ model shift_system {
   working_time Int       
 }
 
+model User {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String
+}
+
 

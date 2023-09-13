@@ -155,6 +155,80 @@ body {
   background-color: coral;
 }
 
+.form {
+  width: 30%;
+  margin-top: 5% ;
+  min-width: 9rem;
+}
+
+input, textarea {
+  float: left;
+  width: 100%;
+  max-width: 100%;
+  border: none;
+  margin: 0.8rem 0;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  background: #e0e0e0;
+  color: #7a7a7b;
+}
+
+input[type=submit], textarea[type=submit] {
+  background: #84AD47;
+  color: #fff;
+  width: auto;
+  float: right;
+}
+input::placeholder, textarea::placeholder {
+  color: #7a7a7a;
+}
+input.error, textarea.error {
+  background: #AD4747;
+  color: #fff;
+}
+input.error::placeholder, textarea.error::placeholder {
+  color: black;
+}
+textarea {
+  height: 10rem;
+}
+.captcha {
+  float: left;
+}
+.captcha input {
+  float: right;
+}
+.captcha input[name=question] {
+  width: 4rem;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  text-align: right;
+  padding-right: 0;
+}
+.captcha [name=captcha] {
+  width: 5rem;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding-left: 0.5rem;
+}
+.captcha [name=captcha]::placeholder {
+  text-align: center;
+}
+* {
+  box-sizing: border-box;
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Open Sans"), local("OpenSans"), url(http://themes.googleusercontent.com/static/fonts/opensans/v7/cJZKeOuBrn4kERxqtaUH3bO3LdcAZYWl9Si6vvxL-qU.woff) format("woff");
+}
+body {
+  padding: 2rem;
+  background: #f9f9f9;
+  color: #2f2f2f;
+  font-family: 'Open Sans';
+}
 
 
 
