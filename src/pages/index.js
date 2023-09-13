@@ -119,17 +119,24 @@ export default function Home() {
           } else {
             let database = read(workbook, momentday);
 
-            for (const item of database) {
-              await fetch("/api/server", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(item),
-              })
+            try {
+              let num = 0;
+              for (const item of database) {
+                await fetch("/api/server", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(item),
+                })
+                num++;
+              }
+              alert("シフトの登録に成功しました");
+              Getdata();
+            } catch (error) { 
+              console.log(num,"途中で終わったよ")
+              console.log(error);
             }
-            alert("シフトの登録に成功しました")
-            Getdata();
           }
         } else {
           console.log("日付データの取得に失敗しました");
