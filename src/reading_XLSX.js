@@ -21,25 +21,25 @@ export function read(workbook, momentday) {
    *  */
 
 
-  //月曜日の読み取り
+
   DAY_Monday = momentday;
 
-  //同じ業務内の計算
+
   for (let i = 0; i < NumOfJob; i++) {
 
     let job_type = reading_data(row, col, Sheet1);
-    row++;//最初の名前にセット
+    row++;
 
     while (judge_data(row, col, Sheet1) == true) {
-      let underspace = false;//名前の下が空白ならtrue
-      let flagoftime = 0;//シフトが２行なら１
+      let underspace = false;
+      let flagoftime = 0;
 
       if (judge_data(row + 1, col, Sheet1) == false) underspace = true;
-      //一人分の計算
+
       let user_name = reading_data(row, col, Sheet1);
 
       for (col = 3; col < 10; col++) {
-        //時間の読み取り
+
         time_inf = reading_time(row, col, Sheet1);
         if (time_inf != 0) {
           shift_inf.push({
@@ -50,7 +50,6 @@ export function read(workbook, momentday) {
           time_inf = 0;
         }
 
-        //underspaceがtrueかつ
         if (underspace == true) {
           if (judge_data(row + 1, col, Sheet1) == true) {
             time_inf = reading_time(row + 1, col, Sheet1);
@@ -66,16 +65,13 @@ export function read(workbook, momentday) {
           }
         }
       }
-
-      //次の人へ
       col = 2;
       row++;
       if (flagoftime == 1) row++;
     }
-    //次の業務へ
+
     row++;
 
-    //タイムラインの計算
 
     shift_inf.sort((a, b) => a.time_inf.start_time - b.time_inf.start_time);
     var line = [0, 0, 0, 0, 0, 0];
@@ -106,46 +102,13 @@ export function read(workbook, momentday) {
         line_n++
       }
     }
-    //初期化
     shift_inf = [];
-    //console.log(database);
   }
 
 
-
-  //(未実装)データベースへの登録
-  // for (const data of database) {
-  //   prisma.shift_system.create({
-  //     data: {
-  //       id: 1,
-  //       job_type: database.job_type,
-  //       user_name: database.user_name,
-  //       start_time: database.start_time,
-  //       line_number: database.line_number,
-  //       DAY_Monday: database.DAY_Monday,
-  //       workingtime: database.workingtime,
-  //     },
-  //   });
-  // }
-
-  // const prisma = new PrismaClient()
-  // const testdatabase = {
-  //   job_type: 'JPモデレーター',
-  //   user_name: 'test',
-  //   start_time: 12345, // 適切な値を設定
-  //   line_number: 1, // 適切な値を設定
-  //   DAY_Monday: '09/06',
-  //   working_time: 4, // 適切な値を設定
-  // }
-  // const shiftSystem =  prisma.shift_system.create({
-  //   data: database,
-  // })
-  //console.log(database);
   return database;
 }
 
-
-//列番号をアルファベットに変換
 function indexToColumn(index) {
   let column = '';
   index--;
@@ -157,13 +120,11 @@ function indexToColumn(index) {
   return column;
 }
 
-//データの読み取り（中身が確実に入っているとき）
 function reading_data(row, col, Sheet1) {
-  //console.log(Sheet1[`${indexToColumn(col)}${row}`].v);
   return Sheet1[`${indexToColumn(col)}${row}`].v;
 }
 
-//データの判定
+
 function judge_data(row, col, Sheet1) {
   if (Sheet1[`${indexToColumn(col)}${row}`] === undefined) {
     return false;
@@ -172,34 +133,34 @@ function judge_data(row, col, Sheet1) {
   }
 }
 
-//時間の読み取り
+
 function reading_time(row, col, Sheet1) {
   let tmptime;
   let start_time;
   let end_time;
   let working_time;
 
-  //中身の未処理データを読み込む
+
   tmptime = reading_data(row, col, Sheet1);
 
-  //空白or休みなら何もしない
+
   if (reading_data(row, col, Sheet1) == ' ') {
     return 0;
   } else if (reading_data(row, col, Sheet1) == '休み') {
     return 0;
   }
 
-  //時間を切り抜く
+
   tmptime = reading_data(row, col, Sheet1);
   start_time = parseInt(tmptime.split("〜")[0].split(":")[0]);
   end_time = parseInt(tmptime.split("〜")[1].split(":")[0]);
 
-  //開始・終了・継続時間を求める
+
   start_time += 24 * (col - 3);
   end_time += 24 * (col - 3);
   working_time = end_time - start_time;
 
-  //データを返す
+
   return { start_time, end_time, working_time };
 
 }
