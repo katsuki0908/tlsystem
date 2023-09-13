@@ -46,6 +46,7 @@ export default function Home() {
 
   const Getdata = async () => {
     const items = [];
+    //@@トライキャッチで確認
     const response = await fetch("/api/server", {
       method: "GET",
       headers: {
