@@ -119,13 +119,15 @@ export default function Home() {
           } else {
             let database = read(workbook, momentday);
 
-            const response = await fetch("/api/server", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(database),
-            })
+            for (const item of database) {
+              await fetch("/api/server", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(item),
+              })
+            }
             alert("シフトの登録に成功しました")
             Getdata();
           }
@@ -167,7 +169,7 @@ export default function Home() {
             </div>
             <div>
               <text>カレンダーの日付を押すと拡大縮小できます</text>
-              <p/>
+              <p />
               <text>直近3週間分のシフトが表示されます</text>
               <Timeline
                 groups={groups}

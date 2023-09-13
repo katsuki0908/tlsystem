@@ -6,18 +6,18 @@ export default async function handler(req, res) {
     if (req.method === "POST") {
         try {
             let newItem;
-            for (const item of req.body) {
-                newItem = await prisma.shift_system.create({
-                    data: {
-                        job_type: item.job_type,
-                        user_name: item.user_name,
-                        start_time: item.start_time,
-                        line_number: item.line_number,
-                        DAY_Monday: item.DAY_Monday,
-                        working_time: item.workingtime
-                    },
-                });
-            }
+            let item = req.body
+            newItem = await prisma.shift_system.create({
+                data: {
+                    job_type: item.job_type,
+                    user_name: item.user_name,
+                    start_time: item.start_time,
+                    line_number: item.line_number,
+                    DAY_Monday: item.DAY_Monday,
+                    working_time: item.workingtime
+                },
+            });
+
             console.log('追加に成功しました');
             res.status(201).json(newItem);
         } catch (error) {
@@ -39,18 +39,18 @@ export default async function handler(req, res) {
                 database = await prisma.shift_system.findMany({
                     where: {
                         DAY_Monday: {
-                          in: await prisma.shift_system.findMany({
-                            select: {
-                              DAY_Monday: true,
-                            },
-                            distinct: ['DAY_Monday'],
-                            orderBy: {
-                              DAY_Monday: 'desc',
-                            },
-                            take: 3,
-                          }).then((data) => data.map((item) => item.DAY_Monday)),
+                            in: await prisma.shift_system.findMany({
+                                select: {
+                                    DAY_Monday: true,
+                                },
+                                distinct: ['DAY_Monday'],
+                                orderBy: {
+                                    DAY_Monday: 'desc',
+                                },
+                                take: 3,
+                            }).then((data) => data.map((item) => item.DAY_Monday)),
                         },
-                      },
+                    },
                 });
 
             }
