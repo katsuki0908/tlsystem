@@ -17,8 +17,6 @@ export default async function handler(req, res) {
                     working_time: item.workingtime
                 },
             });
-
-            console.log('追加に成功しました');
             res.status(201).json(newItem);
         } catch (error) {
             res.status(500).json({ error: "データの追加に失敗しました。" });
